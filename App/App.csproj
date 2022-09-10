@@ -1,0 +1,50 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>JwtCli-UserSecrets</UserSecretsId>
+		<Version>0.0.1-alpha</Version>
+		<Authors>Aymen TROUDI</Authors>
+		<PackAsTool>true</PackAsTool>
+		<PackageId>JwtCli</PackageId>
+		<PackageOutputPath>../Nugets</PackageOutputPath>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<ToolCommandName>JwtCli</ToolCommandName>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Description>A net global tool helping to generate/validate jwt tokens</Description>
+		<PackageTags>dotnet, global tools, cli, jwt</PackageTags>
+		<RepositoryType>git</RepositoryType>
+		<PackageProjectUrl>https://github.com/aimenux/JwtCli</PackageProjectUrl>
+		<RepositoryUrl>$(PackageProjectUrl)</RepositoryUrl>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="McMaster.Extensions.CommandLineUtils" Version="4.0.1" />
+		<PackageReference Include="McMaster.Extensions.Hosting.CommandLine" Version="4.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
+		<PackageReference Include="Scrutor" Version="4.2.0" />
+		<PackageReference Include="Spectre.Console" Version="0.44.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.22.1" />
+		<PackageReference Include="TextCopy" Version="6.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="..\README.md" Pack="true" PackagePath="\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+</Project>
