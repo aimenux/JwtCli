@@ -42,8 +42,8 @@ public class RsaCertificateStrategy : ICertificateStrategy
     public bool VerifyJwtToken(string token, CertificateParameters parameters)
     {
         using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
-        using var rsaPrivateKey = certificate.GetRSAPrivateKey();
-        var securityKey = new RsaSecurityKey(rsaPrivateKey);
+        using var rsaPublicKey = certificate.GetRSAPublicKey();
+        var securityKey = new RsaSecurityKey(rsaPublicKey);
         var validationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = false,

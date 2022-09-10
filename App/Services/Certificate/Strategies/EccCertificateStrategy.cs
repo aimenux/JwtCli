@@ -42,8 +42,8 @@ public class EccCertificateStrategy : ICertificateStrategy
     public bool VerifyJwtToken(string token, CertificateParameters parameters)
     {
         using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
-        using var eccPrivateKey = certificate.GetECDsaPrivateKey();
-        var securityKey = new ECDsaSecurityKey(eccPrivateKey);
+        using var eccPublicKey = certificate.GetECDsaPublicKey();
+        var securityKey = new ECDsaSecurityKey(eccPublicKey);
         var validationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = false,
