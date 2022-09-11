@@ -38,14 +38,7 @@ public class JwtValidateCommand : AbstractCommand
 
     protected override void Execute(CommandLineApplication app)
     {
-        var parameters = new CertificateParameters
-        {
-            Certificate = Certificate,
-            Password = Password,
-            Audience = Audience,
-            Issuer = Issuer
-        };
-
+        var parameters = BuildCertificateParameters();
         var isValid = _certificateService.ValidateJwtToken(Token, parameters);
         ConsoleService.RenderJwtToken(Token, parameters, isValid);
     }
@@ -54,13 +47,29 @@ public class JwtValidateCommand : AbstractCommand
     {
         if (string.IsNullOrWhiteSpace(Token)) return false;
 
-        if (!string.IsNullOrWhiteSpace(ParametersFile))
+        if (string.IsNullOrWhiteSpace(ParametersFile))
         {
-            return File.Exists(ParametersFile);
+            return File.Exists(Certificate) && !string.IsNullOrWhiteSpace(Password);
         }
 
-        return File.Exists(Certificate) && !string.IsNullOrWhiteSpace(Password);
+        return File.Exists(ParametersFile);
     }
 
     protected static string GetVersion() => GetVersion(typeof(JwtValidateCommand));
+
+    private CertificateParameters BuildCertificateParameters()
+    {
+        if (string.IsNullOrWhiteSpace(ParametersFile))
+        {
+            return new CertificateParameters
+            {
+                Certificate = Certificate,
+                Password = Password,
+                Audience = Audience,
+                Issuer = Issuer
+            };
+        }
+
+        return CertificateParameters.BuildFromFile(ParametersFile);
+    }
 }

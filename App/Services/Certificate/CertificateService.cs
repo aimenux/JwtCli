@@ -16,7 +16,7 @@ public class CertificateService : ICertificateService
         var matchingStrategy = _strategies.SingleOrDefault(x => x.IsMatching(parameters));
         if (matchingStrategy is null)
         {
-            throw new ArgumentException("Certificate algorithm is not supported !");
+            throw new ArgumentException($"Unsupported certificate '{parameters.Certificate}' !");
         }
 
         var token = matchingStrategy.CreateJwtToken(parameters);
@@ -28,7 +28,7 @@ public class CertificateService : ICertificateService
         var matchingStrategy = _strategies.SingleOrDefault(x => x.IsMatching(parameters));
         if (matchingStrategy is null)
         {
-            throw new ArgumentException("Certificate algorithm is not supported !");
+            throw new ArgumentException($"Unsupported certificate '{parameters.Certificate}' !");
         }
 
         return matchingStrategy.VerifyJwtToken(token, parameters);

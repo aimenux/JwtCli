@@ -1,4 +1,6 @@
-﻿namespace App.Services.Certificate;
+﻿using System.Text.Json;
+
+namespace App.Services.Certificate;
 
 public class CertificateParameters
 {
@@ -9,4 +11,10 @@ public class CertificateParameters
     public string Kid { get; set; }
     public string TokenType { get; set; }
     public int ExpireInMinutes { get; set; }
+
+    public static CertificateParameters BuildFromFile(string parametersFile)
+    {
+        var json = File.ReadAllText(parametersFile);
+        return JsonSerializer.Deserialize<CertificateParameters>(json);
+    }
 }

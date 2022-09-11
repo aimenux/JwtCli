@@ -44,17 +44,7 @@ public class JwtGenerateCommand : AbstractCommand
 
     protected override void Execute(CommandLineApplication app)
     {
-        var parameters = new CertificateParameters
-        {
-            Certificate = Certificate,
-            Password = Password,
-            ExpireInMinutes = ExpireInMinutes,
-            TokenType = TokenType,
-            Audience = Audience,
-            Issuer = Issuer,
-            Kid = Kid
-        };
-
+        var parameters = BuildCertificateParameters();
         var token = _certificateService.GenerateJwtToken(parameters);
         ConsoleService.RenderJwtToken(token, parameters);
         ConsoleService.CopyTextToClipboard(token);
@@ -62,15 +52,34 @@ public class JwtGenerateCommand : AbstractCommand
 
     protected override bool HasValidOptions()
     {
-        if (!string.IsNullOrWhiteSpace(ParametersFile))
+        if (string.IsNullOrWhiteSpace(ParametersFile))
         {
-            return File.Exists(ParametersFile);
+            return File.Exists(Certificate)
+                   && !string.IsNullOrWhiteSpace(TokenType)
+                   && !string.IsNullOrWhiteSpace(Password);
         }
 
-        return File.Exists(Certificate)
-               && !string.IsNullOrWhiteSpace(TokenType)
-               && !string.IsNullOrWhiteSpace(Password);
+        return File.Exists(ParametersFile);
     }
 
     protected static string GetVersion() => GetVersion(typeof(JwtGenerateCommand));
+
+    private CertificateParameters BuildCertificateParameters()
+    {
+        if (string.IsNullOrWhiteSpace(ParametersFile))
+        {
+            return new CertificateParameters
+            {
+                Certificate = Certificate,
+                Password = Password,
+                ExpireInMinutes = ExpireInMinutes,
+                TokenType = TokenType,
+                Audience = Audience,
+                Issuer = Issuer,
+                Kid = Kid
+            };
+        }
+
+        return CertificateParameters.BuildFromFile(ParametersFile);
+    }
 }

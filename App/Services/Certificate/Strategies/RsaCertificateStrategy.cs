@@ -65,7 +65,7 @@ public class RsaCertificateStrategy : ICertificateStrategy
         var tokenHandler = new JwtSecurityTokenHandler();
         try
         {
-            tokenHandler.ValidateToken(token, validationParameters, out var _);
+            tokenHandler.ValidateToken(token, validationParameters, out _);
             return true;
         }
         catch
@@ -81,7 +81,7 @@ public class RsaCertificateStrategy : ICertificateStrategy
             256 or 2048 => SecurityAlgorithms.RsaSha256,
             384 or 3072 => SecurityAlgorithms.RsaSha384,
             512 or 4096 => SecurityAlgorithms.RsaSha512,
-            _ => throw new ArgumentOutOfRangeException(nameof(keySize), $"Unsupported key size '{keySize}'")
+            _ => throw new ArgumentOutOfRangeException(nameof(keySize), $"Unsupported key size '{keySize}' !")
         };
     }
 }
