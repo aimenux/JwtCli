@@ -5,7 +5,7 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>JwtCli-UserSecrets</UserSecretsId>
-		<Version>0.0.1-alpha</Version>
+		<Version>0.0.2-alpha</Version>
 		<Authors>Aymen TROUDI</Authors>
 		<PackAsTool>true</PackAsTool>
 		<PackageId>JwtCli</PackageId>

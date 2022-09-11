@@ -30,7 +30,7 @@ public class RsaCertificateStrategy : ICertificateStrategy
             SigningCredentials = credentials,
             TokenType = parameters.TokenType,
             Expires = expirationDate,
-            Subject = new ClaimsIdentity(new Claim[]
+            Subject = new ClaimsIdentity(new[]
             {
                 new Claim(nameof(Environment.UserName), Environment.UserName),
                 new Claim(nameof(Environment.MachineName), Environment.MachineName)
