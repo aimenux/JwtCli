@@ -1,3 +1,5 @@
+[![.NET](https://github.com/aimenux/JwtCli/actions/workflows/ci.yml/badge.svg)](https://github.com/aimenux/JwtCli/actions/workflows/ci.yml)
+
 # JwtCli
 ```
 Providing a net global tool to generate/validate jwt tokens
