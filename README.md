@@ -3,7 +3,7 @@
 Providing a net global tool to generate/validate jwt tokens
 ```
 
-> In this repo, i m building a global tool that allows to generate or validate JWT tokens signed with an RSA/ECC certificate.
+> In this repo, i m building a global tool that allows to generate/validate JWT tokens signed with an RSA/ECC certificate.
 >
 > The tool is based on multiple sub commmands :
 > - Use sub command `Generate` to generate jwt tokens

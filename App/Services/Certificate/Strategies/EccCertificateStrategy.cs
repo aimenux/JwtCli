@@ -1,4 +1,5 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
 using App.Extensions;
 using Microsoft.IdentityModel.Tokens;
@@ -28,7 +29,12 @@ public class EccCertificateStrategy : ICertificateStrategy
             Audience = parameters.Audience,
             SigningCredentials = credentials,
             TokenType = parameters.TokenType,
-            Expires = expirationDate
+            Expires = expirationDate,
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(nameof(Environment.UserName), Environment.UserName),
+                new Claim(nameof(Environment.MachineName), Environment.MachineName)
+            })
         };
         var tokenHandler = new JwtSecurityTokenHandler();
         var token = tokenHandler
