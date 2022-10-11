@@ -24,13 +24,13 @@ public class JwtGenerateCommand : AbstractCommand
     public string Password { get; set; }
 
     [Option("-a|--audience", "Token audience", CommandOptionType.SingleValue)]
-    public string Audience { get; set; }
+    public string Audience { get; set; } = "localhost";
 
     [Option("-i|--issuer", "Token issuer", CommandOptionType.SingleValue)]
-    public string Issuer { get; set; }
+    public string Issuer { get; set; } = "localhost";
 
     [Option("-k|--kid", "Token kid", CommandOptionType.SingleValue)]
-    public string Kid { get; set; }
+    public string Kid { get; set; } = Guid.NewGuid().ToString("D");
 
     [Option("-tt|--token-type", "Token type", CommandOptionType.SingleValue)]
     public string TokenType { get; set; } = "jwt";
