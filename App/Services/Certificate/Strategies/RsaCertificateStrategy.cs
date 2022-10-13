@@ -10,9 +10,16 @@ public class RsaCertificateStrategy : ICertificateStrategy
 {
     public bool IsMatching(CertificateParameters parameters)
     {
-        using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
-        using var rsaPrivateKey = certificate.GetRSAPrivateKey();
-        return rsaPrivateKey != null;
+        try
+        {
+            using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
+            using var rsaPrivateKey = certificate.GetRSAPrivateKey();
+            return rsaPrivateKey != null;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public string CreateJwtToken(CertificateParameters parameters)

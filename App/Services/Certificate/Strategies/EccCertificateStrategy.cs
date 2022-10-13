@@ -10,9 +10,16 @@ public class EccCertificateStrategy : ICertificateStrategy
 {
     public bool IsMatching(CertificateParameters parameters)
     {
-        using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
-        using var eccPrivateKey = certificate.GetECDsaPrivateKey();
-        return eccPrivateKey != null;
+        try
+        {
+            using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
+            using var eccPrivateKey = certificate.GetECDsaPrivateKey();
+            return eccPrivateKey != null;
+        }
+        catch
+        {
+            return false;
+        }
     }
 
     public string CreateJwtToken(CertificateParameters parameters)
