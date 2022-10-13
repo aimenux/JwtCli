@@ -18,7 +18,7 @@ namespace App.Extensions
         {
             if (!token.Header.TryAdd("kid", kid))
             {
-                token.Header["kid"] = "1";
+                token.Header["kid"] = kid;
             }
             return token;
         }
