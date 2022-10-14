@@ -20,7 +20,7 @@ Providing a net global tool to generate/validate jwt tokens
 >
 >
 > To install global tool from a local source path, type commands :
-> - `dotnet tool install -g --configfile .\Nugets\local.config JwtCli --version "*-*" --ignore-failed-sources`
+> - `dotnet tool install -g --configfile .\nugets\local.config JwtCli --version "*-*" --ignore-failed-sources`
 >
 > To install global tool from [nuget source](https://www.nuget.org/packages/JwtCli), type these command :
 > - For stable version : `dotnet tool install -g JwtCli --ignore-failed-sources`

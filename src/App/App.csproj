@@ -9,7 +9,7 @@
 		<Authors>Aymen TROUDI</Authors>
 		<PackAsTool>true</PackAsTool>
 		<PackageId>JwtCli</PackageId>
-		<PackageOutputPath>../Nugets</PackageOutputPath>
+		<PackageOutputPath>../../nugets</PackageOutputPath>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<ToolCommandName>JwtCli</ToolCommandName>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -33,12 +33,12 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Console" Version="6.0.0" />
 		<PackageReference Include="Scrutor" Version="4.2.0" />
 		<PackageReference Include="Spectre.Console" Version="0.45.0" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.23.1" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.24.0" />
 		<PackageReference Include="TextCopy" Version="6.1.0" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Include="..\README.md" Pack="true" PackagePath="\" />
+		<None Include="..\..\README.md" Pack="true" PackagePath="\" />
 	</ItemGroup>
 
 	<ItemGroup>

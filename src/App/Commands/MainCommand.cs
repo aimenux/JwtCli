@@ -1,10 +1,11 @@
-﻿using App.Extensions;
+﻿using System.Reflection;
+using App.Extensions;
 using App.Services.Console;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace App.Commands;
 
-[Command(Name = "JwtCli", FullName = "Generate/Validate JWT Tokens", Description = "Generate/Validate JWT Tokens.")]
+[Command(Name = Constants.ToolName, FullName = $"\n{Constants.ToolName}", Description = "Generate/Validate JWT Tokens.")]
 [Subcommand(typeof(JwtGenerateCommand), typeof(JwtValidateCommand))]
 [VersionOptionFromMember(MemberName = nameof(GetVersion))]
 public class MainCommand : AbstractCommand
@@ -25,11 +26,18 @@ public class MainCommand : AbstractCommand
         }
         else
         {
-            const string title = "JwtCli";
-            ConsoleService.RenderTitle(title);
+            ConsoleService.RenderTitle(Constants.ToolName);
             app.ShowHelp();
         }
     }
 
     protected static string GetVersion() => GetVersion(typeof(MainCommand));
+
+    private static string GetVersion(Type type)
+    {
+        return type
+            .Assembly
+            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
+            ?.InformationalVersion!;
+    }
 }

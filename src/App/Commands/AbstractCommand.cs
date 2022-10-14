@@ -1,5 +1,4 @@
-﻿using System.Reflection;
-using App.Services.Console;
+﻿using App.Services.Console;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace App.Commands;
@@ -35,12 +34,4 @@ public abstract class AbstractCommand
     protected virtual bool HasValidOptions() => true;
 
     protected virtual bool HasValidArguments() => true;
-
-    protected static string GetVersion(Type type)
-    {
-        return type
-            .Assembly
-            .GetCustomAttribute<AssemblyInformationalVersionAttribute>()
-            ?.InformationalVersion!;
-    }
 }
