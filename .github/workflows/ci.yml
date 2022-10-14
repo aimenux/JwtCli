@@ -27,5 +27,5 @@ jobs:
       uses: alirezanet/publish-nuget@v3.0.3
       with:
           PACKAGE_NAME: DotnetToolsCli
-          PROJECT_FILE_PATH: App/App.csproj
+          PROJECT_FILE_PATH: Src/App/App.csproj
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
