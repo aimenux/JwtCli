@@ -4,17 +4,17 @@ using System.Security.Cryptography.X509Certificates;
 using App.Extensions;
 using Microsoft.IdentityModel.Tokens;
 
-namespace App.Services.Certificate.Strategies;
+namespace App.Services.Security.Strategies;
 
-public class RsaCertificateStrategy : ICertificateStrategy
+public class EccCertificateStrategy : ICertificateStrategy
 {
-    public bool IsMatching(CertificateParameters parameters)
+    public bool IsMatching(SecurityParameters parameters)
     {
         try
         {
             using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
-            using var rsaPrivateKey = certificate.GetRSAPrivateKey();
-            return rsaPrivateKey != null;
+            using var eccPrivateKey = certificate.GetECDsaPrivateKey();
+            return eccPrivateKey != null;
         }
         catch
         {
@@ -22,11 +22,11 @@ public class RsaCertificateStrategy : ICertificateStrategy
         }
     }
 
-    public string CreateJwtToken(CertificateParameters parameters)
+    public string CreateJwtToken(SecurityParameters parameters)
     {
         using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
-        using var rsaPrivateKey = certificate.GetRSAPrivateKey();
-        var securityKey = new RsaSecurityKey(rsaPrivateKey);
+        using var eccPrivateKey = certificate.GetECDsaPrivateKey();
+        var securityKey = new ECDsaSecurityKey(eccPrivateKey);
         var securityAlgorithm = GetSecurityAlgorithm(securityKey.KeySize);
         var credentials = new SigningCredentials(securityKey, securityAlgorithm);
         var expirationDate = DateTime.UtcNow.AddMinutes(parameters.ExpireInMinutes);
@@ -52,11 +52,11 @@ public class RsaCertificateStrategy : ICertificateStrategy
         return jws;
     }
 
-    public bool VerifyJwtToken(string token, CertificateParameters parameters)
+    public bool VerifyJwtToken(string token, SecurityParameters parameters)
     {
         using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
-        using var rsaPublicKey = certificate.GetRSAPublicKey();
-        var securityKey = new RsaSecurityKey(rsaPublicKey);
+        using var eccPublicKey = certificate.GetECDsaPublicKey();
+        var securityKey = new ECDsaSecurityKey(eccPublicKey);
         var validationParameters = new TokenValidationParameters()
         {
             ValidateIssuer = false,
@@ -91,9 +91,9 @@ public class RsaCertificateStrategy : ICertificateStrategy
     {
         return keySize switch
         {
-            256 or 2048 => SecurityAlgorithms.RsaSha256,
-            384 or 3072 => SecurityAlgorithms.RsaSha384,
-            512 or 4096 => SecurityAlgorithms.RsaSha512,
+            256 or 2048 => SecurityAlgorithms.EcdsaSha256,
+            384 or 3072 => SecurityAlgorithms.EcdsaSha384,
+            512 or 4096 => SecurityAlgorithms.EcdsaSha512,
             _ => throw new ArgumentOutOfRangeException(nameof(keySize), $"Unsupported key size '{keySize}' !")
         };
     }

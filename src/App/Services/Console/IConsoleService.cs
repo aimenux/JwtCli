@@ -1,4 +1,4 @@
-﻿using App.Services.Certificate;
+﻿using App.Services.Security;
 
 namespace App.Services.Console
 {
@@ -8,7 +8,8 @@ namespace App.Services.Console
         void CopyTextToClipboard(string text);
         void RenderSettingsFile(string filepath);
         void RenderException(Exception exception);
-        void RenderJwtToken(string token, CertificateParameters parameters);
-        void RenderJwtToken(string token, CertificateParameters parameters, bool isValid);
+        void RenderSecurityDetails(SecurityDetails securityDetails);
+        void RenderJwtToken(string token, SecurityParameters parameters);
+        void RenderJwtToken(string token, SecurityParameters parameters, bool isValid);
     }
 }

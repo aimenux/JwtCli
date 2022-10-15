@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using App.Extensions;
-using App.Services.Certificate;
+using App.Services.Security;
 using Spectre.Console;
 using TextCopy;
 
@@ -56,7 +56,55 @@ public class ConsoleService : IConsoleService
         AnsiConsole.WriteLine();
     }
 
-    public void RenderJwtToken(string token, CertificateParameters parameters)
+    public void RenderSecurityDetails(SecurityDetails securityDetails)
+    {
+        var headerTable = new Table()
+            .BorderColor(Color.White)
+            .Border(TableBorder.Square);
+
+        foreach (var key in securityDetails.Header.Keys)
+        {
+            headerTable.AddColumn(new TableColumn($"[u]{key}[/]").Centered());
+        }
+
+        headerTable.AddRow(securityDetails.Header.Values.ToArray());
+
+        var payloadTable = new Table()
+            .BorderColor(Color.White)
+            .Border(TableBorder.Square);
+
+        foreach (var key in securityDetails.Payload.Keys)
+        {
+            payloadTable.AddColumn(new TableColumn($"[u]{key}[/]").Centered());
+        }
+
+        payloadTable.AddRow(securityDetails.Payload.Values.ToArray());
+
+        var validFrom = securityDetails.ValidFrom.ToString("F");
+        var validTo = securityDetails.ValidTo.ToString("F");
+
+        var validityTable = new Table()
+            .BorderColor(Color.White)
+            .Border(TableBorder.Square)
+            .AddColumn(new TableColumn($"[u]ValidFrom[/]").Centered())
+            .AddColumn(new TableColumn($"[u]ValidTo[/]").Centered())
+            .AddRow(validFrom, validTo);
+
+        var table = new Table()
+            .BorderColor(Color.White)
+            .Border(TableBorder.Square)
+            .AddColumn(new TableColumn("[u]Header[/]").Centered())
+            .AddColumn(new TableColumn("[u]Payload[/]").Centered())
+            .AddColumn(new TableColumn("[u]Dates[/]").Centered());
+
+        table.AddRow(headerTable, payloadTable, validityTable);
+
+        AnsiConsole.WriteLine();
+        AnsiConsole.Write(table);
+        AnsiConsole.WriteLine();
+    }
+
+    public void RenderJwtToken(string token, SecurityParameters parameters)
     {
         AnsiConsole.WriteLine();
         AnsiConsole.Write(new Markup($"[yellow]{token.EscapeMarkup()}[/]"));
@@ -64,7 +112,7 @@ public class ConsoleService : IConsoleService
         AnsiConsole.WriteLine();
     }
 
-    public void RenderJwtToken(string token, CertificateParameters parameters, bool isValid)
+    public void RenderJwtToken(string token, SecurityParameters parameters, bool isValid)
     {
         AnsiConsole.WriteLine();
         AnsiConsole.Write(isValid ? new Markup("[green]Token is valid[/]") : new Markup("[red]Token is not valid[/]"));

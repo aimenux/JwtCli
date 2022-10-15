@@ -1,0 +1,9 @@
+﻿{
+  "Certificate": "./Files/RSA.pfx",
+  "Password": "4-tests",
+  "Audience": "7e0f0eea-bbef-4ff9-949d-9d1e3de006f8",
+  "Issuer": "7b0ac5f4-62b8-4ea2-8f7e-26f8fce4a99c",
+  "Kid": "9fe0d096-883e-46a2-9a5c-28874b0ef008",
+  "TokenType": "jwt",
+  "ExpireInMinutes": 5
+}

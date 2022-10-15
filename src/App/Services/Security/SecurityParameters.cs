@@ -1,8 +1,8 @@
 ﻿using System.Text.Json;
 
-namespace App.Services.Certificate;
+namespace App.Services.Security;
 
-public class CertificateParameters
+public class SecurityParameters
 {
     public string Certificate { get; set; }
     public string Password { get; set; }
@@ -12,9 +12,9 @@ public class CertificateParameters
     public string TokenType { get; set; }
     public int ExpireInMinutes { get; set; }
 
-    public static CertificateParameters BuildFromFile(string parametersFile)
+    public static SecurityParameters BuildFromFile(string parametersFile)
     {
         var json = File.ReadAllText(parametersFile);
-        return JsonSerializer.Deserialize<CertificateParameters>(json);
+        return JsonSerializer.Deserialize<SecurityParameters>(json);
     }
 }

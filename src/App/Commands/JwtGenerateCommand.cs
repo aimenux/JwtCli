@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using App.Services.Certificate;
 using App.Services.Console;
+using App.Services.Security;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace App.Commands;
@@ -9,11 +9,11 @@ namespace App.Commands;
 [HelpOption]
 public class JwtGenerateCommand : AbstractCommand
 {
-    private readonly ICertificateService _certificateService;
+    private readonly ISecurityService _securityService;
 
-    public JwtGenerateCommand(ICertificateService certificateService, IConsoleService consoleService) : base(consoleService)
+    public JwtGenerateCommand(ISecurityService securityService, IConsoleService consoleService) : base(consoleService)
     {
-        _certificateService = certificateService ?? throw new ArgumentNullException(nameof(certificateService));
+        _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
     }
 
     [Option("-c|--certificate", "Certificate file", CommandOptionType.SingleValue)]
@@ -44,7 +44,7 @@ public class JwtGenerateCommand : AbstractCommand
     protected override void Execute(CommandLineApplication app)
     {
         var parameters = BuildCertificateParameters();
-        var token = _certificateService.GenerateJwtToken(parameters);
+        var token = _securityService.GenerateJwtToken(parameters);
         ConsoleService.RenderJwtToken(token, parameters);
         ConsoleService.CopyTextToClipboard(token);
     }
@@ -61,11 +61,11 @@ public class JwtGenerateCommand : AbstractCommand
         return File.Exists(ParametersFile);
     }
 
-    private CertificateParameters BuildCertificateParameters()
+    private SecurityParameters BuildCertificateParameters()
     {
         if (string.IsNullOrWhiteSpace(ParametersFile))
         {
-            return new CertificateParameters
+            return new SecurityParameters
             {
                 Certificate = Certificate,
                 Password = Password,
@@ -77,6 +77,6 @@ public class JwtGenerateCommand : AbstractCommand
             };
         }
 
-        return CertificateParameters.BuildFromFile(ParametersFile);
+        return SecurityParameters.BuildFromFile(ParametersFile);
     }
 }

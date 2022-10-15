@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using App.Services.Certificate;
 using App.Services.Console;
+using App.Services.Security;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace App.Commands;
@@ -9,11 +9,11 @@ namespace App.Commands;
 [HelpOption]
 public class JwtValidateCommand : AbstractCommand
 {
-    private readonly ICertificateService _certificateService;
+    private readonly ISecurityService _securityService;
 
-    public JwtValidateCommand(ICertificateService certificateService, IConsoleService consoleService) : base(consoleService)
+    public JwtValidateCommand(ISecurityService securityService, IConsoleService consoleService) : base(consoleService)
     {
-        _certificateService = certificateService ?? throw new ArgumentNullException(nameof(certificateService));
+        _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
     }
 
     [Required]
@@ -38,7 +38,7 @@ public class JwtValidateCommand : AbstractCommand
     protected override void Execute(CommandLineApplication app)
     {
         var parameters = BuildCertificateParameters();
-        var isValid = _certificateService.ValidateJwtToken(Token, parameters);
+        var isValid = _securityService.ValidateJwtToken(Token, parameters);
         ConsoleService.RenderJwtToken(Token, parameters, isValid);
     }
 
@@ -54,11 +54,11 @@ public class JwtValidateCommand : AbstractCommand
         return File.Exists(ParametersFile);
     }
 
-    private CertificateParameters BuildCertificateParameters()
+    private SecurityParameters BuildCertificateParameters()
     {
         if (string.IsNullOrWhiteSpace(ParametersFile))
         {
-            return new CertificateParameters
+            return new SecurityParameters
             {
                 Certificate = Certificate,
                 Password = Password,
@@ -67,6 +67,6 @@ public class JwtValidateCommand : AbstractCommand
             };
         }
 
-        return CertificateParameters.BuildFromFile(ParametersFile);
+        return SecurityParameters.BuildFromFile(ParametersFile);
     }
 }
