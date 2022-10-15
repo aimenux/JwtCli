@@ -28,7 +28,10 @@ public class EccCertificateStrategy : ICertificateStrategy
         using var eccPrivateKey = certificate.GetECDsaPrivateKey();
         var securityKey = new ECDsaSecurityKey(eccPrivateKey);
         var securityAlgorithm = GetSecurityAlgorithm(securityKey.KeySize);
-        var credentials = new SigningCredentials(securityKey, securityAlgorithm);
+        var credentials = new SigningCredentials(securityKey, securityAlgorithm)
+        {
+            CryptoProviderFactory = new CryptoProviderFactory { CacheSignatureProviders = false }
+        };
         var expirationDate = DateTime.UtcNow.AddMinutes(parameters.ExpireInMinutes);
         var std = new SecurityTokenDescriptor
         {

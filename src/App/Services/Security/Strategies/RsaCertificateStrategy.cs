@@ -28,7 +28,10 @@ public class RsaCertificateStrategy : ICertificateStrategy
         using var rsaPrivateKey = certificate.GetRSAPrivateKey();
         var securityKey = new RsaSecurityKey(rsaPrivateKey);
         var securityAlgorithm = GetSecurityAlgorithm(securityKey.KeySize);
-        var credentials = new SigningCredentials(securityKey, securityAlgorithm);
+        var credentials = new SigningCredentials(securityKey, securityAlgorithm)
+        {
+            CryptoProviderFactory = new CryptoProviderFactory { CacheSignatureProviders = false }
+        };
         var expirationDate = DateTime.UtcNow.AddMinutes(parameters.ExpireInMinutes);
         var std = new SecurityTokenDescriptor
         {
