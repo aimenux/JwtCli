@@ -4,7 +4,7 @@ using FluentAssertions;
 
 namespace Tests
 {
-    public class CertificateServiceTests
+    public class SecurityServiceTests
     {
         [Fact]
         public void Given_Rsa_Certificate_Then_Should_Generate_Valid_Jwt()
@@ -37,7 +37,7 @@ namespace Tests
             isValid.Should().BeTrue();
         }
 
-        [Fact]
+        [Fact(Skip = "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/issues/1302")]
         public void Given_Ecc_Certificate_Then_Should_Generate_Valid_Jwt()
         {
             // arrange

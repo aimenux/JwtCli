@@ -8,6 +8,11 @@ namespace App.Services.Security.Strategies;
 
 public class RsaCertificateStrategy : ICertificateStrategy
 {
+    private static readonly CryptoProviderFactory CryptoProviderFactory = new()
+    {
+        CacheSignatureProviders = false
+    };
+
     public bool IsMatching(SecurityParameters parameters)
     {
         try
@@ -30,7 +35,7 @@ public class RsaCertificateStrategy : ICertificateStrategy
         var securityAlgorithm = GetSecurityAlgorithm(securityKey.KeySize);
         var credentials = new SigningCredentials(securityKey, securityAlgorithm)
         {
-            CryptoProviderFactory = new CryptoProviderFactory { CacheSignatureProviders = false }
+            CryptoProviderFactory = CryptoProviderFactory
         };
         var expirationDate = DateTime.UtcNow.AddMinutes(parameters.ExpireInMinutes);
         var std = new SecurityTokenDescriptor

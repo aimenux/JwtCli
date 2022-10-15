@@ -56,7 +56,7 @@ public class SecurityService : ISecurityService
         return matchingStrategy.VerifyJwtToken(token, parameters);
     }
 
-    private IDictionary<string, string> ToDictionary(JwtHeader header)
+    private static IDictionary<string, string> ToDictionary(JwtHeader header)
     {
         var dic = new Dictionary<string, string>();
 
@@ -68,7 +68,7 @@ public class SecurityService : ISecurityService
         return dic;
     }
 
-    private IDictionary<string, string> ToDictionary(JwtPayload payload)
+    private static IDictionary<string, string> ToDictionary(JwtPayload payload)
     {
         var dic = new Dictionary<string, string>();
 
