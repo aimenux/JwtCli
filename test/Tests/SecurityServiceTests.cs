@@ -6,7 +6,7 @@ namespace Tests
 {
     public class SecurityServiceTests
     {
-        [Fact(Skip = "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/issues/1302")]
+        [Fact]
         public void Given_Rsa_Certificate_Then_Should_Generate_Valid_Jwt()
         {
             // arrange
@@ -37,7 +37,7 @@ namespace Tests
             isValid.Should().BeTrue();
         }
 
-        [Fact(Skip = "https://github.com/AzureAD/azure-activedirectory-identitymodel-extensions-for-dotnet/issues/1302")]
+        [Fact]
         public void Given_Ecc_Certificate_Then_Should_Generate_Valid_Jwt()
         {
             // arrange

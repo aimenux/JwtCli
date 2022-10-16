@@ -8,7 +8,7 @@ namespace App.Services.Security.Strategies;
 
 public class EccCertificateStrategy : ICertificateStrategy
 {
-    private static readonly CryptoProviderFactory CryptoProviderFactory = new()
+    private static readonly CryptoProviderFactory NoCacheFactory = new()
     {
         CacheSignatureProviders = false
     };
@@ -35,7 +35,7 @@ public class EccCertificateStrategy : ICertificateStrategy
         var securityAlgorithm = GetSecurityAlgorithm(securityKey.KeySize);
         var credentials = new SigningCredentials(securityKey, securityAlgorithm)
         {
-            CryptoProviderFactory = CryptoProviderFactory
+            CryptoProviderFactory = NoCacheFactory
         };
         var expirationDate = DateTime.UtcNow.AddMinutes(parameters.ExpireInMinutes);
         var std = new SecurityTokenDescriptor
@@ -65,13 +65,14 @@ public class EccCertificateStrategy : ICertificateStrategy
         using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
         using var eccPublicKey = certificate.GetECDsaPublicKey();
         var securityKey = new ECDsaSecurityKey(eccPublicKey);
-        var validationParameters = new TokenValidationParameters()
+        var validationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = securityKey,
+            CryptoProviderFactory = NoCacheFactory
         };
         if (!string.IsNullOrWhiteSpace(parameters.Issuer))
         {

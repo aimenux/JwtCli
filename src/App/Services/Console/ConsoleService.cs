@@ -58,9 +58,11 @@ public class ConsoleService : IConsoleService
 
     public void RenderSecurityDetails(SecurityDetails securityDetails)
     {
+        var subTableColor = Color.LightYellow3;
+
         var headerTable = new Table()
-            .BorderColor(Color.White)
-            .Border(TableBorder.Square);
+            .BorderColor(subTableColor)
+            .Border(TableBorder.Rounded);
 
         foreach (var key in securityDetails.Header.Keys)
         {
@@ -70,8 +72,8 @@ public class ConsoleService : IConsoleService
         headerTable.AddRow(securityDetails.Header.Values.ToArray());
 
         var payloadTable = new Table()
-            .BorderColor(Color.White)
-            .Border(TableBorder.Square);
+            .BorderColor(subTableColor)
+            .Border(TableBorder.Rounded);
 
         foreach (var key in securityDetails.Payload.Keys)
         {
@@ -84,8 +86,8 @@ public class ConsoleService : IConsoleService
         var validTo = securityDetails.ValidTo.ToString("F");
 
         var validityTable = new Table()
-            .BorderColor(Color.White)
-            .Border(TableBorder.Square)
+            .BorderColor(subTableColor)
+            .Border(TableBorder.Rounded)
             .AddColumn(new TableColumn($"[u]ValidFrom[/]").Centered())
             .AddColumn(new TableColumn($"[u]ValidTo[/]").Centered())
             .AddRow(validFrom, validTo);
@@ -93,9 +95,9 @@ public class ConsoleService : IConsoleService
         var table = new Table()
             .BorderColor(Color.White)
             .Border(TableBorder.Square)
-            .AddColumn(new TableColumn("[u]Header[/]").Centered())
-            .AddColumn(new TableColumn("[u]Payload[/]").Centered())
-            .AddColumn(new TableColumn("[u]Dates[/]").Centered());
+            .AddColumn(new TableColumn($"[u][{subTableColor}]Header[/][/]").Centered())
+            .AddColumn(new TableColumn($"[u][{subTableColor}]Payload[/][/]").Centered())
+            .AddColumn(new TableColumn($"[u][{subTableColor}]Dates[/][/]").Centered());
 
         table.AddRow(headerTable, payloadTable, validityTable);
 

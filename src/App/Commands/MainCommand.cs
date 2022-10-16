@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 
 namespace App.Commands;
 
-[Command(Name = Constants.ToolName, FullName = $"\n{Constants.ToolName}", Description = "Generate/Validate JWT Tokens.")]
+[Command(Name = Constants.ToolName, FullName = $"\n{Constants.ToolName}", Description = "Generate/Validate/Decode JWT Tokens.")]
 [Subcommand(typeof(JwtGenerateCommand), typeof(JwtValidateCommand), typeof(JwtDecodeCommand))]
 [VersionOptionFromMember(MemberName = nameof(GetVersion))]
 public class MainCommand : AbstractCommand
