@@ -16,9 +16,9 @@ Providing a net global tool to decode/generate/validate jwt tokens
 > To run the tool, type commands :
 > - `JwtCli -h` to show help
 > - `JwtCli -s` to show settings
-> - `JwtCli Decode -j [jwt] to decode jwt token
+> - `JwtCli Decode -t [token]` to decode jwt token
 > - `JwtCli Generate -c [certificate] -p [password]` to generate jwt token
-> - `JwtCli Validate -c [certificate] -p [password]` -t [token] to validate jwt token
+> - `JwtCli Validate -c [certificate] -p [password] -t [token]` to validate jwt token
 >
 >
 > To install global tool from a local source path, type commands :

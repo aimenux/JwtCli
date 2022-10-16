@@ -15,17 +15,17 @@ public class JwtDecodeCommand : AbstractCommand
         _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
     }
 
-    [Option("-j|--jwt", "JWT", CommandOptionType.SingleValue)]
-    public string Jwt { get; set; }
+    [Option("-t|--Token", "Jwt token", CommandOptionType.SingleValue)]
+    public string Token { get; set; }
 
     protected override void Execute(CommandLineApplication app)
     {
-        var securityDetails = _securityService.DecodeJwtToken(Jwt);
+        var securityDetails = _securityService.DecodeJwtToken(Token);
         ConsoleService.RenderSecurityDetails(securityDetails);
     }
 
     protected override bool HasValidOptions()
     {
-        return !string.IsNullOrWhiteSpace(Jwt);
+        return !string.IsNullOrWhiteSpace(Token);
     }
 }
