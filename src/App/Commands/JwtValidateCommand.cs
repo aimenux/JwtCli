@@ -32,6 +32,9 @@ public class JwtValidateCommand : AbstractCommand
     [Option("-i|--issuer", "Token issuer", CommandOptionType.SingleValue)]
     public string Issuer { get; set; }
 
+    [Option("-tt|--token-type", "Token type", CommandOptionType.SingleValue)]
+    public string TokenType { get; set; } = "jwt";
+
     [Option("-f|--file", "Parameters file", CommandOptionType.SingleValue)]
     public string ParametersFile { get; set; }
 
@@ -61,6 +64,7 @@ public class JwtValidateCommand : AbstractCommand
             return new SecurityParameters
             {
                 Certificate = Certificate,
+                TokenType = TokenType,
                 Password = Password,
                 Audience = Audience,
                 Issuer = Issuer

@@ -65,11 +65,15 @@ public class EccCertificateStrategy : ICertificateStrategy
         using var certificate = new X509Certificate2(parameters.Certificate, parameters.Password);
         using var eccPublicKey = certificate.GetECDsaPublicKey();
         var securityKey = new ECDsaSecurityKey(eccPublicKey);
+        var validTypes = string.IsNullOrWhiteSpace(parameters.TokenType)
+            ? null
+            : new List<string> { parameters.TokenType };
         var validationParameters = new TokenValidationParameters
         {
             ValidateIssuer = false,
             ValidateAudience = false,
             ValidateLifetime = true,
+            ValidTypes = validTypes,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = securityKey,
             CryptoProviderFactory = NoCacheFactory
