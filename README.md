@@ -1,4 +1,5 @@
 [![.NET](https://github.com/aimenux/JwtCli/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/aimenux/JwtCli/actions/workflows/ci.yml)
+[![NuGet](https://img.shields.io/nuget/v/JwtCli)](https://www.nuget.org/packages/JwtCli/)
 
 # JwtCli
 ```
