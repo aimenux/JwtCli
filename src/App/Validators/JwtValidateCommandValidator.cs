@@ -13,6 +13,7 @@ public class JwtValidateCommandValidator : AbstractValidator<JwtValidateCommand>
         When(x => string.IsNullOrWhiteSpace(x.ParametersFile), () =>
             {
                 RuleFor(x => x.Certificate)
+                    .Cascade(CascadeMode.Stop)
                     .NotEmpty()
                     .Must(File.Exists).WithMessage("File '{PropertyValue}' does not exist.");
                 RuleFor(x => x.Password)
@@ -21,6 +22,7 @@ public class JwtValidateCommandValidator : AbstractValidator<JwtValidateCommand>
             .Otherwise(() =>
             {
                 RuleFor(x => x.ParametersFile)
+                    .Cascade(CascadeMode.Stop)
                     .NotEmpty()
                     .Must(File.Exists);
             });

@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using App.Services.Console;
+﻿using App.Services.Console;
 using App.Services.Security;
 using McMaster.Extensions.CommandLineUtils;
 
@@ -15,8 +14,7 @@ public class JwtValidateCommand : AbstractCommand
     {
         _securityService = securityService ?? throw new ArgumentNullException(nameof(securityService));
     }
-
-    [Required]
+    
     [Option("-t|--token", "Jwt token", CommandOptionType.SingleValue)]
     public string Token { get; init; }
 
