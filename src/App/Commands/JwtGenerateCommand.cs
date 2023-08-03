@@ -28,7 +28,7 @@ public class JwtGenerateCommand : AbstractCommand
     public string Issuer { get; init; } = "localhost";
 
     [Option("-k|--kid", "Token kid", CommandOptionType.SingleValue)]
-    public string Kid { get; init; } = Guid.NewGuid().ToString("D");
+    public string Kid { get; init; } = Guid.NewGuid().ToString("N");
 
     [Option("-tt|--token-type", "Token type", CommandOptionType.SingleValue)]
     public string TokenType { get; init; } = "jwt";

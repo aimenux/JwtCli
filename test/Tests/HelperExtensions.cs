@@ -10,7 +10,8 @@ public static class HelperExtensions
         {
             Certificate = certificate,
             Password = password,
-            ExpireInMinutes = 5
+            ExpireInMinutes = 5,
+            Kid = Guid.NewGuid().ToString("N")
         });
         return token;
     }

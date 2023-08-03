@@ -62,7 +62,7 @@ public class SecurityService : ISecurityService
 
         foreach (var (key, value) in header)
         {
-            dic.Add(key, value.ToString());
+            dic.Add(key, value?.ToString() ?? string.Empty);
         }
 
         return dic;
@@ -74,7 +74,7 @@ public class SecurityService : ISecurityService
 
         foreach (var (key, value) in payload)
         {
-            dic.Add(key, value.ToString());
+            dic.Add(key, value?.ToString() ?? string.Empty);
         }
 
         return dic;
