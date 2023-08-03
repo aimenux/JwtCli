@@ -14,7 +14,7 @@ namespace App
         {
             try
             {
-                await CreateHostBuilder(args).RunCommandLineApplicationAsync<MainCommand>(args);
+                await CreateHostBuilder(args).RunCommandLineApplicationAsync<ToolCommand>(args);
             }
             catch (Exception ex)
             {

@@ -1,7 +1,7 @@
 ﻿using App.Services.Security;
 using FluentAssertions;
 
-namespace Tests
+namespace Tests.Services
 {
     public class CertificateParametersTests
     {

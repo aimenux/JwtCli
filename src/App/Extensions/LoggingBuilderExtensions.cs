@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using App.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
@@ -27,12 +28,12 @@ public static class LoggingBuilderExtensions
 
     public static void AddNonGenericLogger(this ILoggingBuilder loggingBuilder)
     {
-        var categoryName = typeof(Program).Namespace;
+        const string categoryName = Settings.Cli.ToolName;
         var services = loggingBuilder.Services;
         services.AddSingleton(serviceProvider =>
         {
             var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-            return loggerFactory.CreateLogger(categoryName!);
+            return loggerFactory.CreateLogger(categoryName);
         });
     }
 }

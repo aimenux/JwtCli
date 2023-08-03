@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using App.Services.Console;
+﻿using App.Services.Console;
 using App.Services.Security;
 using McMaster.Extensions.CommandLineUtils;
 
@@ -17,48 +16,38 @@ public class JwtGenerateCommand : AbstractCommand
     }
 
     [Option("-c|--certificate", "Certificate file", CommandOptionType.SingleValue)]
-    public string Certificate { get; set; }
+    public string Certificate { get; init; }
 
     [Option("-p|--password", "Certificate password", CommandOptionType.SingleValue)]
-    public string Password { get; set; }
+    public string Password { get; init; }
 
     [Option("-a|--audience", "Token audience", CommandOptionType.SingleValue)]
-    public string Audience { get; set; } = "localhost";
+    public string Audience { get; init; } = "localhost";
 
     [Option("-i|--issuer", "Token issuer", CommandOptionType.SingleValue)]
-    public string Issuer { get; set; } = "localhost";
+    public string Issuer { get; init; } = "localhost";
 
     [Option("-k|--kid", "Token kid", CommandOptionType.SingleValue)]
-    public string Kid { get; set; } = Guid.NewGuid().ToString("D");
+    public string Kid { get; init; } = Guid.NewGuid().ToString("D");
 
     [Option("-tt|--token-type", "Token type", CommandOptionType.SingleValue)]
-    public string TokenType { get; set; } = "jwt";
+    public string TokenType { get; init; } = "jwt";
 
-    [Range(1, int.MaxValue)]
     [Option("-e|--expire-after", "Token expiration in minutes", CommandOptionType.SingleValue)]
-    public int ExpireInMinutes { get; set; } = 5;
+    public int ExpireInMinutes { get; init; } = 5;
 
     [Option("-f|--file", "Parameters file", CommandOptionType.SingleValue)]
-    public string ParametersFile { get; set; }
+    public string ParametersFile { get; init; }
 
     protected override void Execute(CommandLineApplication app)
     {
-        var parameters = BuildCertificateParameters();
-        var token = _securityService.GenerateJwtToken(parameters);
-        ConsoleService.RenderJwtToken(token, parameters);
-        ConsoleService.CopyTextToClipboard(token);
-    }
-
-    protected override bool HasValidOptions()
-    {
-        if (string.IsNullOrWhiteSpace(ParametersFile))
+        ConsoleService.RenderStatus(() =>
         {
-            return File.Exists(Certificate)
-                   && !string.IsNullOrWhiteSpace(TokenType)
-                   && !string.IsNullOrWhiteSpace(Password);
-        }
-
-        return File.Exists(ParametersFile);
+            var parameters = BuildCertificateParameters();
+            var token = _securityService.GenerateJwtToken(parameters);
+            ConsoleService.RenderJwtToken(token, parameters);
+            ConsoleService.CopyTextToClipboard(token);
+        });
     }
 
     private SecurityParameters BuildCertificateParameters()

@@ -5,9 +5,9 @@
 Providing a net global tool to decode/generate/validate jwt tokens
 ```
 
-> In this repo, i m building a global tool that allows to generate/validate JWT tokens signed with an RSA/ECC certificate.
+> In this repo, i m building a global tool that allows to decode, generate and validate JWT tokens signed with an RSA/ECC certificate.
 >
-> The tool is based on multiple sub commmands :
+> The tool is based on multiple sub commands :
 > - Use sub command `Decode` to decode jwt tokens
 > - Use sub command `Generate` to generate jwt tokens
 > - Use sub command `Validate` to validate jwt tokens
@@ -15,6 +15,7 @@ Providing a net global tool to decode/generate/validate jwt tokens
 >
 > To run the tool, type commands :
 > - `JwtCli -h` to show help
+> - `JwtCli -v` to show version
 > - `JwtCli -s` to show settings
 > - `JwtCli Decode -t [token]` to decode jwt token
 > - `JwtCli Generate -c [certificate] -p [password]` to generate jwt token
@@ -33,4 +34,4 @@ Providing a net global tool to decode/generate/validate jwt tokens
 >
 >
 
-**`Tools`** : vs22, net 6.0, command-line, spectre-console
+**`Tools`** : vs22, net 6.0/7.0, command-line, spectre-console, fluent-validation, xunit

@@ -19,13 +19,13 @@ public class SecurityParameters
         ExpireInMinutes = parameters.ExpireInMinutes;
     }
 
-    public string Certificate { get; set; }
-    public string Password { get; set; }
-    public string Audience { get; set; }
-    public string Issuer { get; set; }
-    public string Kid { get; set; }
-    public string TokenType { get; set; }
-    public int ExpireInMinutes { get; set; }
+    public string Certificate { get; init; }
+    public string Password { get; init; }
+    public string Audience { get; init; }
+    public string Issuer { get; init; }
+    public string Kid { get; init; }
+    public string TokenType { get; init; }
+    public int ExpireInMinutes { get; init; }
 
     public static SecurityParameters BuildFromFile(string parametersFile)
     {

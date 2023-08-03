@@ -2,7 +2,7 @@
 using App.Services.Security.Strategies;
 using FluentAssertions;
 
-namespace Tests
+namespace Tests.Services
 {
     public class SecurityServiceTests
     {

@@ -2,11 +2,11 @@
 {
     public class SecurityDetails
     {
-        public IDictionary<string, string> Header { get; set; }
-        public IDictionary<string, string> Payload { get; set; }
-        public string Audience { get; set; }
-        public string Issuer { get; set; }
-        public DateTime ValidFrom { get; set; }
-        public DateTime ValidTo { get; set; }
+        public IDictionary<string, string> Header { get; init; }
+        public IDictionary<string, string> Payload { get; init; }
+        public string Audience { get; init; }
+        public string Issuer { get; init; }
+        public DateTime ValidFrom { get; init; }
+        public DateTime ValidTo { get; init; }
     }
 }

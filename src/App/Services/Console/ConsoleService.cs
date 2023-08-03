@@ -1,6 +1,9 @@
-﻿using System.Text;
+﻿using System.Reflection;
+using System.Text;
+using App.Configuration;
 using App.Extensions;
 using App.Services.Security;
+using App.Validators;
 using Spectre.Console;
 using TextCopy;
 
@@ -16,7 +19,16 @@ public class ConsoleService : IConsoleService
     public void RenderTitle(string text)
     {
         AnsiConsole.WriteLine();
-        AnsiConsole.Write(new FigletText(text).LeftAligned());
+        AnsiConsole.Write(new FigletText(text));
+        AnsiConsole.WriteLine();
+    }
+
+    public void RenderVersion(string version)
+    {
+        var text = $"{Settings.Cli.ToolName} V{version}";
+        AnsiConsole.WriteLine();
+        AnsiConsole.Write(new Markup($"[bold {Color.White}]{text}[/]"));
+        AnsiConsole.WriteLine();
         AnsiConsole.WriteLine();
     }
 
@@ -45,6 +57,14 @@ public class ConsoleService : IConsoleService
         AnsiConsole.WriteLine();
     }
 
+    public void RenderUserSecretsFile(string filepath)
+    {
+        if (!OperatingSystem.IsWindows()) return;
+        if (!File.Exists(filepath)) return;
+        if (!GetYesOrNoAnswer("display user secrets", false)) return;
+        RenderSettingsFile(filepath);
+    }
+
     public void RenderException(Exception exception)
     {
         const ExceptionFormats formats = ExceptionFormats.ShortenTypes
@@ -53,6 +73,50 @@ public class ConsoleService : IConsoleService
 
         AnsiConsole.WriteLine();
         AnsiConsole.WriteException(exception, formats);
+        AnsiConsole.WriteLine();
+    }
+
+    public void RenderStatus(Action action)
+    {
+        var spinner = RandomSpinner();
+
+        AnsiConsole.Status()
+            .Start("Work is in progress ...", ctx =>
+            {
+                ctx.Spinner(spinner);
+                action.Invoke();
+            });
+    }
+
+    public bool GetYesOrNoAnswer(string text, bool defaultAnswer)
+    {
+        if (AnsiConsole.Confirm($"Do you want to [u]{text}[/] ?", defaultAnswer)) return true;
+        AnsiConsole.WriteLine();
+        return false;
+    }
+
+    public void RenderValidationErrors(ValidationErrors validationErrors)
+    {
+        var count = validationErrors.Count;
+
+        var table = new Table()
+            .BorderColor(Color.White)
+            .Border(TableBorder.Square)
+            .Title($"[red][bold]{count} error(s)[/][/]")
+            .AddColumn(new TableColumn("[u]Name[/]").Centered())
+            .AddColumn(new TableColumn("[u]Message[/]").Centered())
+            .Caption("[grey][bold]Invalid options/arguments[/][/]");
+
+        foreach (var error in validationErrors)
+        {
+            var failure = error.Failure;
+            var name = $"[bold]{error.OptionName()}[/]";
+            var reason = $"[tan]{failure.ErrorMessage}[/]";
+            table.AddRow(ToMarkup(name), ToMarkup(reason));
+        }
+
+        AnsiConsole.WriteLine();
+        AnsiConsole.Write(table);
         AnsiConsole.WriteLine();
     }
 
@@ -121,4 +185,30 @@ public class ConsoleService : IConsoleService
         AnsiConsole.WriteLine();
         AnsiConsole.WriteLine();
     }
+    
+    private static Spinner RandomSpinner() 
+    {
+        var values = typeof(Spinner.Known)
+            .GetProperties(BindingFlags.Public | BindingFlags.Static)
+            .Where(x => x.PropertyType == typeof(Spinner))
+            .Select(x => (Spinner)x.GetValue(null))
+            .ToArray();
+        var index = Random.Shared.Next(values.Length);
+        var value = (Spinner)values.GetValue(index);
+        return value;
+    }
+    
+    private static Markup ToMarkup(string text)
+    {
+        try
+        {
+            return new Markup(text ?? string.Empty);
+        }
+        catch
+        {
+            return ErrorMarkup;
+        }
+    }
+
+    private static readonly Markup ErrorMarkup = new(Emoji.Known.CrossMark);
 }

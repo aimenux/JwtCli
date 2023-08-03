@@ -47,8 +47,8 @@ public class RsaCertificateStrategy : ICertificateStrategy
             Expires = expirationDate,
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim(nameof(Environment.UserName), Environment.UserName),
-                new Claim(nameof(Environment.MachineName), Environment.MachineName)
+                new Claim("user", Environment.UserName),
+                new Claim("machine", Environment.MachineName)
             })
         };
         var tokenHandler = new JwtSecurityTokenHandler();
@@ -74,9 +74,11 @@ public class RsaCertificateStrategy : ICertificateStrategy
             ValidateAudience = false,
             ValidateLifetime = true,
             ValidTypes = validTypes,
+            RequireSignedTokens = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = securityKey,
-            CryptoProviderFactory = NoCacheFactory
+            CryptoProviderFactory = NoCacheFactory,
+            ClockSkew = TimeSpan.Zero
         };
         if (!string.IsNullOrWhiteSpace(parameters.Issuer))
         {
