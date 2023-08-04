@@ -1,5 +1,6 @@
 [![.NET](https://github.com/aimenux/JwtCli/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/aimenux/JwtCli/actions/workflows/ci.yml)
 [![NuGet](https://img.shields.io/nuget/v/JwtCli)](https://www.nuget.org/packages/JwtCli/)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=JwtCli-Key&metric=coverage)](https://sonarcloud.io/summary/new_code?id=JwtCli-Key)
 
 # JwtCli
 ```
@@ -33,6 +34,8 @@ Providing a net global tool to decode/generate/validate jwt tokens
 > To uninstall global tool, type these command :
 > - `dotnet tool uninstall -g JwtCli`
 >
+> 
+> ![JwtCli](Screenshots/JwtCli.png)
 >
 
 **`Tools`** : vs22, net 6.0/7.0, command-line, spectre-console, fluent-validation, xunit
