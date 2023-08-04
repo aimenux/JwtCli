@@ -8,9 +8,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v3
     - name: Setup .NET
@@ -30,8 +28,7 @@ jobs:
       with:
           PACKAGE_NAME: JwtCli
           PROJECT_FILE_PATH: src/App/App.csproj
-          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
-          
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}                    
   sonar:
     needs: build
     runs-on: ubuntu-latest
