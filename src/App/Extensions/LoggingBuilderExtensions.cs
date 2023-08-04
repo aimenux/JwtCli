@@ -1,10 +1,12 @@
-﻿using App.Configuration;
+﻿using System.Diagnostics.CodeAnalysis;
+using App.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
 
 namespace App.Extensions;
 
+[ExcludeFromCodeCoverage]
 public static class LoggingBuilderExtensions
 {
     public static void AddConsoleLogger(this ILoggingBuilder loggingBuilder)

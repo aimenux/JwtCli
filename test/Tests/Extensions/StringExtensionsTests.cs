@@ -1,4 +1,5 @@
-﻿using App.Extensions;
+﻿using System.Text.RegularExpressions;
+using App.Extensions;
 using FluentAssertions;
 
 namespace Tests.Extensions;
@@ -38,4 +39,20 @@ public class StringExtensionsTests
         // assert
         areEquals.Should().BeFalse();
     }
+    
+    [Fact]
+    public void Should_Prettify_Json()
+    {
+        // arrange
+        const string json = @"{""Name"":""John"",""Age"":20}";
+        
+        // act
+        var prettyJson = json.JsonPrettify();
+
+        // assert
+        prettyJson.Should().NotBeEmpty();
+        RemoveWhitespaces(prettyJson).Should().Be(json);
+    }
+
+    private static string RemoveWhitespaces(string text) => Regex.Replace(text, @"\s+", "");
 }

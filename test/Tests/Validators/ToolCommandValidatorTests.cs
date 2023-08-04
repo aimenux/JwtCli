@@ -1,8 +1,10 @@
 ﻿using App.Commands;
+using App.Exceptions;
 using App.Services.Console;
 using App.Services.Security;
 using App.Validators;
 using FluentAssertions;
+using McMaster.Extensions.CommandLineUtils;
 using NSubstitute;
 
 namespace Tests.Validators;
@@ -66,5 +68,30 @@ public class ToolCommandValidatorTests
 
         // assert
         validationErrors.Should().NotBeNull();
+    }
+    
+    [Fact]
+    public void Should_Throw_Exception_For_Unexpected_Commands()
+    {
+        // arrange
+        var consoleService = Substitute.For<IConsoleService>();
+        var command = new UnexpectedCommand(consoleService);
+
+        // act
+        var validateFunc = () => ToolCommandValidator.Validate(command);
+
+        // assert
+        validateFunc.Should().Throw<JwtCliException>();
+    }
+
+    private class UnexpectedCommand : AbstractCommand
+    {
+        public UnexpectedCommand(IConsoleService consoleService) : base(consoleService)
+        {
+        }
+
+        protected override void Execute(CommandLineApplication app)
+        {
+        }
     }
 }

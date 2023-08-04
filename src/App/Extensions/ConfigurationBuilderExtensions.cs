@@ -1,20 +1,21 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using System.Diagnostics.CodeAnalysis;
+using Microsoft.Extensions.Configuration;
 
-namespace App.Extensions
+namespace App.Extensions;
+
+[ExcludeFromCodeCoverage]
+public static class ConfigurationBuilderExtensions
 {
-    public static class ConfigurationBuilderExtensions
+    public static void AddJsonFile(this IConfigurationBuilder configurationBuilder)
     {
-        public static void AddJsonFile(this IConfigurationBuilder configurationBuilder)
-        {
-            configurationBuilder.SetBasePath(PathExtensions.GetDirectoryPath());
-            var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
-            configurationBuilder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-            configurationBuilder.AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true);
-        }
+        configurationBuilder.SetBasePath(PathExtensions.GetDirectoryPath());
+        var environment = Environment.GetEnvironmentVariable("ENVIRONMENT");
+        configurationBuilder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+        configurationBuilder.AddJsonFile($"appsettings.{environment}.json", optional: true, reloadOnChange: true);
+    }
 
-        public static void AddUserSecrets(this IConfigurationBuilder configurationBuilder)
-        {
-            configurationBuilder.AddUserSecrets(typeof(Program).Assembly);
-        }
+    public static void AddUserSecrets(this IConfigurationBuilder configurationBuilder)
+    {
+        configurationBuilder.AddUserSecrets(typeof(Program).Assembly);
     }
 }
