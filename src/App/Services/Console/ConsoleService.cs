@@ -178,6 +178,9 @@ public class ConsoleService : IConsoleService
         AnsiConsole.Write(new Markup($"[yellow]{token.EscapeMarkup()}[/]"));
         AnsiConsole.WriteLine();
         AnsiConsole.WriteLine();
+        AnsiConsole.Write(new Markup("[bold black on yellow]The token is already copied to clipboard.[/]"));
+        AnsiConsole.WriteLine();
+        AnsiConsole.WriteLine();
     }
 
     public void RenderJwtToken(string token, SecurityParameters parameters, bool isValid)
