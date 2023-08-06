@@ -14,18 +14,16 @@ public class JwtGenerateCommandValidator : AbstractValidator<JwtGenerateCommand>
         When(x => string.IsNullOrWhiteSpace(x.ParametersFile), () =>
             {
                 RuleFor(x => x.Certificate)
-                    .Cascade(CascadeMode.Stop)
-                    .NotEmpty()
-                    .Must(File.Exists).WithMessage("File '{PropertyValue}' does not exist.");
+                    .Required()
+                    .FileExists();
                 RuleFor(x => x.Password)
-                    .NotEmpty();
+                    .Required();
             })
             .Otherwise(() =>
             {
                 RuleFor(x => x.ParametersFile)
-                    .Cascade(CascadeMode.Stop)
-                    .NotEmpty()
-                    .Must(File.Exists);
+                    .Required()
+                    .FileExists();
             });
     }
 }
