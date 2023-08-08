@@ -10,14 +10,15 @@ public static class FluentValidationExtensions
             
         return ruleBuilder
             .NotNull()
+            .WithMessage("'{PropertyName}' is required.")
             .NotEmpty()
-            .WithMessage("{PropertyName} is required.");
+            .WithMessage("'{PropertyName}' must not be empty.");
     }
     
     public static IRuleBuilderOptions<T, string> FileExists<T>(this IRuleBuilder<T, string> ruleBuilder)
     {
         return ruleBuilder
             .Must<T, string>((Func<T, string, bool>) ((x, val) => File.Exists(val)))
-            .WithMessage("File {PropertyName} does not exist.");
+            .WithMessage("File '{PropertyValue}' does not exist.");
     }
 }
