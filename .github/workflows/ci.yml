@@ -46,12 +46,12 @@ jobs:
             7.0.x          
             8.0.x          
       - name: SonarCloud Scan
-        uses: highbyte/sonarscan-dotnet@v2.2.1
+        uses: highbyte/sonarscan-dotnet@v2.3.1
         with:
           sonarProjectName:  JwtCli
           sonarProjectKey: JwtCli-Key
           sonarOrganization: aimenux-sonar-cloud-key
-          dotnetTestArguments: -f net7.0 --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnetTestArguments: -f net8.0 --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/**/TestResults/**/coverage.opencover.xml"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
