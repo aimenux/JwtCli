@@ -5,6 +5,7 @@ using App.Services.Security.Strategies;
 using FluentAssertions;
 using McMaster.Extensions.CommandLineUtils;
 using Tests.Commands.Fakes;
+using Tests.Helpers;
 
 namespace Tests.Commands;
 

@@ -38,4 +38,4 @@ Providing a net global tool to decode/generate/validate jwt tokens
 > ![JwtCli](Screenshots/JwtCli.png)
 >
 
-**`Tools`** : vs22, net 6.0/7.0, command-line, spectre-console, fluent-validation, xunit
+**`Tools`** : vs22, net 6.0/7.0/8.0, command-line, spectre-console, fluent-validation, xunit

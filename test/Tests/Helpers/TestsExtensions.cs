@@ -1,8 +1,8 @@
 ﻿using App.Services.Security;
 
-namespace Tests;
+namespace Tests.Helpers;
 
-public static class HelperExtensions
+public static class TestsExtensions
 {
     public static string GetToken(this ISecurityService securityService, string certificate, string password)
     {

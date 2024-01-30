@@ -17,6 +17,7 @@ jobs:
         dotnet-version: |
           6.0.x
           7.0.x
+          8.0.x
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
@@ -43,6 +44,7 @@ jobs:
           dotnet-version: |
             6.0.x
             7.0.x          
+            8.0.x          
       - name: SonarCloud Scan
         uses: highbyte/sonarscan-dotnet@v2.2.1
         with:
